@@ -1,0 +1,5 @@
+@import "~typeface-inter/inter.css";
+
+* {
+    font-family: "Inter", Arial;
+}
