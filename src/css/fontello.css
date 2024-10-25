@@ -1,11 +1,11 @@
 @font-face {
     font-family: "fontello";
-    src: url("../font/fontello.eot?84312767");
-    src: url("../font/fontello.eot?84312767#iefix") format("embedded-opentype"),
-        url("../font/fontello.woff2?84312767") format("woff2"),
-        url("../font/fontello.woff?84312767") format("woff"),
-        url("../font/fontello.ttf?84312767") format("truetype"),
-        url("../font/fontello.svg?84312767#fontello") format("svg");
+    src: url("../font/fontello.eot?83117323");
+    src: url("../font/fontello.eot?83117323#iefix") format("embedded-opentype"),
+        url("../font/fontello.woff2?83117323") format("woff2"),
+        url("../font/fontello.woff?83117323") format("woff"),
+        url("../font/fontello.ttf?83117323") format("truetype"),
+        url("../font/fontello.svg?83117323#fontello") format("svg");
     font-weight: normal;
     font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'fontello';
-    src: url('../font/fontello.svg?84312767#fontello') format('svg');
+    src: url('../font/fontello.svg?83117323#fontello') format('svg');
   }
 }
 */
@@ -61,10 +61,10 @@
 .icon-calendar:before {
     content: "\e801";
 } /* '' */
-.icon-ok-circle:before {
+.icon-trash-empty:before {
     content: "\e802";
 } /* '' */
-.icon-inbox:before {
+.icon-attach:before {
     content: "\e803";
 } /* '' */
 .icon-search:before {
@@ -73,24 +73,24 @@
 .icon-clock:before {
     content: "\e805";
 } /* '' */
-.icon-briefcase:before {
+.icon-pencil:before {
     content: "\e806";
 } /* '' */
 .icon-plus:before {
     content: "\e807";
 } /* '' */
-.icon-list:before {
+.icon-attention-circled:before {
     content: "\e808";
 } /* '' */
-.icon-right-open:before {
-    content: "\f006";
-} /* '' */
-.icon-left-open:before {
-    content: "\f007";
-} /* '' */
+.icon-inbox-1:before {
+    content: "\e809";
+} /* '' */
 .icon-folder:before {
     content: "\f067";
 } /* '' */
+.icon-bookmark-empty:before {
+    content: "\f097";
+} /* '' */
 .icon-github-circled:before {
     content: "\f09b";
 } /* '' */
