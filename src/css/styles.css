@@ -1,5 +1,304 @@
 @import "~typeface-inter/inter.css";
 
+:root {
+    --dark-blue: rgb(74, 102, 226);
+    --light-blue: rgb(245, 247, 253);
+    --very-dark-grey: rgb(68, 68, 68);
+    --dark-grey: rgb(74, 74, 74);
+    --grey: rgb(167, 167, 167);
+    --light-grey: rgb(215, 215, 215);
+    --very-light-grey: rgb(248, 248, 248);
+}
+
 * {
     font-family: "Inter", Arial;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    margin: 0;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 0.1rem solid var(--light-grey);
+    height: 100vh;
+    width: 25vw;
+    padding: 1.8rem;
+    position: fixed;
+}
+
+button {
+    color: black;
+    text-decoration: none;
+}
+.user-details {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    margin-bottom: 2.5rem;
+}
+
+.user-detail-text {
+    display: flex;
+    gap: 0.2rem;
+    flex-direction: column;
+}
+
+#name {
+    display: inline-block;
+    box-sizing: content-box;
+    cursor: pointer;
+    border: none;
+    color: inherit;
+    font: inherit;
+    padding: 0;
+    outline: none;
+    font-weight: 700;
+    width: auto;
+}
+
+#name::placeholder {
+    color: black;
+    font-weight: 700;
+}
+
+#name:focus::placeholder {
+    color: var(--grey);
+}
+
+.credits i {
+    margin-left: -0.3em;
+    font-size: 3rem;
+}
+
+.credits a {
+    text-decoration: none;
+    color: black;
+}
+
+.task-summary {
+    color: var(--dark-grey);
+}
+
+.search {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search a {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    left: 0.8rem;
+    color: var(--dark-grey);
+}
+
+#search-bar {
+    position: absolute;
+    border-radius: 3rem;
+    border: none;
+    background-color: var(--very-light-grey);
+    width: 100%;
+    padding: 0.5rem 0;
+    padding-left: 2.6rem;
+}
+
+#search-bar:focus {
+    background-color: white;
+    outline: none;
+    border: 0.1rem solid var(--very-light-grey);
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+    gap: 0.3rem;
+}
+
+.actions i {
+    font-size: 1.6rem;
+}
+
+.actions button {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    padding: 0.3rem 0.4rem;
+    border-radius: 0.6rem;
+    border: none;
+    cursor: pointer;
+    gap: 0.5rem;
+}
+
+#add-todo i {
+    font-size: 2rem;
+    margin-left: -0.3rem;
+    color: var(--dark-blue);
+}
+
+#add-todo {
+    font-weight: 600;
+    color: var(--dark-blue);
+}
+
+#add-todo:hover {
+    background-color: white;
+}
+.actions button:hover {
+    background-color: var(--very-light-grey);
+}
+
+.actions .active-task:hover {
+    background-color: var(--light-blue);
+}
+
+.project-container {
+    margin-top: 3rem;
+}
+
+.project-heading {
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding-bottom: 0.6rem;
+}
+
+.project-scrollable {
+    overflow-y: auto;
+    height: 22vh;
+}
+
+.project {
+    display: flex;
+    align-items: center;
+    padding: 0.4rem;
+    margin: 0.2rem 0;
+    gap: 0.7rem;
+    font-weight: 550;
+    border-radius: 0.5rem;
+}
+
+.project i {
+    color: var(--grey);
+    font-size: 1.3rem;
+}
+
+.actions .active,
+.project-scrollable .active i,
+.project-scrollable .active {
+    color: var(--dark-blue);
+    background-color: var(--light-blue);
+}
+
+.project:hover {
+    background-color: var(--very-light-grey);
+    cursor: pointer;
+}
+
+main {
+    margin-left: 25vw;
+    padding: 5rem;
+    width: 100%;
+}
+
+.section-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    overflow-y: auto;
+}
+
+.task-heading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding-bottom: 0.8rem;
+}
+
+.task-project-group {
+    margin-top: 3rem;
+    color: black;
+}
+
+.task-main {
+    display: flex;
+    gap: 0.6rem;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.8rem;
+    border-top: 0.1rem solid rgba(240, 240, 240);
+    padding: 0.8rem 0;
+}
+
+.task i {
+    font-size: 1.3rem;
+    color: var(--very-dark-grey);
+    cursor: pointer;
+}
+
+.task-description {
+    font-weight: 400;
+    margin-bottom: 0.4rem;
+}
+
+.task-date {
+    display: flex;
+    color: var(--dark-blue);
+    align-items: center;
+}
+
+.task-date i {
+    font-size: 0.8rem;
+    color: var(--dark-blue);
+    padding-right: 0.2rem;
+    margin-left: -0.2em;
+}
+
+.task-date div {
+    padding-right: 1rem;
+    font-size: 0.8rem;
+}
+
+.description {
+    margin-top: 1rem;
+    color: rgb(110, 110, 110);
+}
+
+#delete-task {
+    display: none;
+    color: var(--dark-grey);
+    margin-right: 1rem;
+    height: 100%;
+    align-self: center;
+}
+
+.task:hover {
+    cursor: pointer;
+}
+
+.task:hover #delete-task {
+    display: block;
+}
+.task-main .overdue {
+    color: var(--dark-blue);
+}
+
+.add-task i {
+    margin-right: 0.8rem;
+    color: var(--dark-blue);
+}
+
+.add-task {
+    color: rgb(108, 108, 108);
+    width: 100%;
+    padding: 0.3rem 0;
 }

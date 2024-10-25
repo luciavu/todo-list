@@ -5,5 +5,195 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Todo List</title>
     </head>
-    <body></body>
+    <body>
+        <div class="sidebar">
+            <div class="container">
+                <div class="user-details">
+                    <div class="credits">
+                        <a
+                            href="https://github.com/luciavu/todo-list"
+                            target="_blank"
+                        >
+                            <i class="icon-github-circled"></i>
+                        </a>
+                    </div>
+                    <div class="user-detail-text">
+                        <div class="username">
+                            <input
+                                type="text"
+                                name="name"
+                                id="name"
+                                placeholder="username"
+                            />
+                        </div>
+                        <div class="task-summary">7/20 tasks remaining</div>
+                    </div>
+                </div>
+                <div class="search">
+                    <input
+                        type="text"
+                        name="search-bar"
+                        id="search-bar"
+                        placeholder="Search tasks"
+                    />
+                    <a href="#"><i class="icon-search"></i></a>
+                </div>
+                <div class="actions">
+                    <button id="add-todo">
+                        <i class="icon-plus-circled"></i>Add task
+                    </button>
+                    <button id="all" class="active">
+                        <i class="icon-inbox-1"></i>All
+                    </button>
+                    <button id="today">
+                        <i class="icon-attach"></i>
+                        <div class="button-text">Today</div>
+                    </button>
+                    <button id="scheduled">
+                        <i class="icon-calendar"></i>Scheduled
+                    </button>
+
+                    <button id="completed">
+                        <i class="icon-bookmark-empty"></i>Completed
+                    </button>
+                </div>
+                <div class="project-container">
+                    <div class="project-heading">Projects 🌀⋆✩</div>
+                    <div class="project-scrollable">
+                        <div class="project active">
+                            <i class="icon-folder"></i>
+                            <div class="project-name">School</div>
+                        </div>
+                        <div class="project">
+                            <i class="icon-folder"></i>
+                            <div class="project-name">Work</div>
+                        </div>
+                        <div class="project">
+                            <i class="icon-folder"></i>
+                            <div class="project-name">Errands</div>
+                        </div>
+                        <div class="project">
+                            <i class="icon-folder"></i>
+                            <div class="project-name">Personal</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <main>
+            <div class="section-heading">All</div>
+
+            <div class="task-container">
+                <div class="task-project-group">
+                    <div class="task-heading">School</div>
+                    <div class="task">
+                        <div class="task-main">
+                            <i class="icon-circle-thin" id="task-completed"></i>
+                            <div class="task-details">
+                                <div class="task-description">Finish code</div>
+                                <div class="task-date">
+                                    <i class="icon-clock priority"></i>
+                                    <div id="due-date">3:00am</div>
+                                    <i class="icon-attention-circled"></i>
+                                    <div class="overdue">Overdue</div>
+                                </div>
+                            </div>
+                        </div>
+                        <i class="icon-trash-empty" id="delete-task"></i>
+                    </div>
+                    <div class="task">
+                        <div class="task-main">
+                            <i class="icon-circle-thin" id="task-completed"></i>
+                            <div class="task-details">
+                                <div class="task-description">Finish code</div>
+                                <div class="task-date">
+                                    <div id="due-date">12:00am</div>
+                                    <i class="icon-attention-circled"></i>
+                                    <div class="overdue">Overdue</div>
+                                </div>
+                            </div>
+                        </div>
+                        <i class="icon-trash-empty" id="delete-task"></i>
+                    </div>
+                    <div class="task">
+                        <div class="add-task">
+                            <i class="icon-plus"></i>Add task
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="task-container">
+                <div class="task-project-group">
+                    <div class="task-heading">Work</div>
+                    <div class="task">
+                        <div class="task-main">
+                            <i class="icon-circle-thin" id="task-completed"></i>
+                            <div class="task-details">
+                                <div class="task-description">Wake up</div>
+                                <div class="task-date">
+                                    <div id="due-date">7:00am</div>
+                                </div>
+                            </div>
+                        </div>
+                        <i class="icon-trash-empty" id="delete-task"></i>
+                    </div>
+                    <div class="task">
+                        <div class="task-main">
+                            <i class="icon-circle-thin" id="task-completed"></i>
+                            <div class="task-details">
+                                <div class="task-description">Go home</div>
+                                <div class="task-date">
+                                    <i class="icon-clock priority"></i>
+                                    <div id="due-date">9:00pm</div>
+                                </div>
+                            </div>
+                        </div>
+                        <i class="icon-trash-empty" id="delete-task"></i>
+                    </div>
+                    <div class="task">
+                        <div class="add-task">
+                            <i class="icon-plus"></i>Add task
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="task-container">
+                <div class="task-project-group">
+                    <div class="task-heading">Work</div>
+                    <div class="task">
+                        <div class="task-main">
+                            <i class="icon-circle-thin" id="task-completed"></i>
+                            <div class="task-details">
+                                <div class="task-description">Wake up</div>
+                                <div class="task-date">
+                                    <div id="due-date">7:00am</div>
+                                </div>
+                            </div>
+                        </div>
+                        <i class="icon-trash-empty" id="delete-task"></i>
+                    </div>
+                    <div class="task">
+                        <div class="task-main">
+                            <i class="icon-circle-thin" id="task-completed"></i>
+                            <div class="task-details">
+                                <div class="task-description">Go home</div>
+                                <div class="task-date">
+                                    <i class="icon-clock priority"></i>
+                                    <div id="due-date">9:00pm</div>
+                                </div>
+                            </div>
+                        </div>
+                        <i class="icon-trash-empty" id="delete-task"></i>
+                    </div>
+                    <div class="task">
+                        <div class="add-task">
+                            <i class="icon-plus"></i>Add task
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
 </html>
