@@ -16,6 +16,28 @@
     box-sizing: border-box;
 }
 
+@media only screen and (max-width: 500px) {
+    html body .sidebar {
+        border: none;
+        width: 100%;
+    }
+
+    html body main {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    body .sidebar {
+        width: 40vw;
+    }
+
+    body main {
+        width: 60vw;
+        margin-left: 40vw;
+    }
+}
+
 body {
     display: flex;
     margin: 0;
@@ -32,13 +54,23 @@ body {
     position: fixed;
 }
 
+.arrow i {
+    color: var(--dark-grey);
+    font-size: 1.4rem;
+    position: absolute;
+    right: 1.4rem;
+    top: 2rem;
+}
+
 button {
     color: black;
     text-decoration: none;
 }
+
 .user-details {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 0.2rem;
     margin-bottom: 2.5rem;
 }
@@ -47,6 +79,11 @@ button {
     display: flex;
     gap: 0.2rem;
     flex-direction: column;
+    width: min-content;
+}
+
+.username {
+    width: 12rem;
 }
 
 #name {
@@ -54,12 +91,11 @@ button {
     box-sizing: content-box;
     cursor: pointer;
     border: none;
-    color: inherit;
-    font: inherit;
     padding: 0;
     outline: none;
     font-weight: 700;
-    width: auto;
+    width: min-content;
+    background-color: rgba(255, 255, 255, 0);
 }
 
 #name::placeholder {
@@ -83,6 +119,7 @@ button {
 
 .task-summary {
     color: var(--dark-grey);
+    width: fit-content;
 }
 
 .search {
@@ -190,6 +227,10 @@ button {
     font-size: 1.3rem;
 }
 
+.add-project i {
+    color: var(--dark-blue);
+}
+
 .actions .active,
 .project-scrollable .active i,
 .project-scrollable .active {
@@ -200,6 +241,10 @@ button {
 .project:hover {
     background-color: var(--very-light-grey);
     cursor: pointer;
+}
+
+.add-project:hover {
+    background-color: white;
 }
 
 main {
@@ -288,6 +333,7 @@ main {
 .task:hover #delete-task {
     display: block;
 }
+
 .task-main .overdue {
     color: var(--dark-blue);
 }
