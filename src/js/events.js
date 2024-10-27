@@ -6,10 +6,11 @@ import {
     exitProjectPopup,
     expandSidebar,
     collapseSidebar,
-    adjustDisplay,
     loadProject,
     loadSection,
 } from "./dom";
+
+import { retrieveProjectDetails, retrieveTaskDetails } from "./form.js";
 
 export function setupMainEventListeners(user) {
     // Add task from sidebar/notes
@@ -71,11 +72,19 @@ export function setupMainEventListeners(user) {
         console.log("User exited project popup");
         exitProjectPopup();
     });
-}
 
-export function popupEventListeners() {
-    const taskPopup = document.getElementById("add-task-popup");
-    const projectPopup = document.getElementById("add-project-popup");
+    // Popup submit buttons
+    const taskBtn = document.getElementById("addTaskBtn");
+    taskBtn.addEventListener("click", () => {
+        retrieveTaskDetails();
+        exitTaskPopup();
+    });
+
+    const projectBtn = document.getElementById("addProjectBtn");
+    projectBtn.addEventListener("click", () => {
+        retrieveProjectDetails();
+        exitProjectPopup();
+    });
 }
 
 export function setupUserEventListeners(user) {

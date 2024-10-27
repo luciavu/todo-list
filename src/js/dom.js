@@ -3,7 +3,6 @@ import {
     setupProjectEventListeners,
     setupTaskEventListeners,
 } from "./events";
-import { User } from "./models.js";
 
 export function addDOMProject(project) {
     const projectFolder = document.querySelector(".project-scrollable");
@@ -42,13 +41,23 @@ export function addProjectPopup() {
 
 export function exitTaskPopup() {
     const addTaskPopup = document.querySelector(".add-task-popup");
-    // Clear the input values
+    const taskName = document.getElementById("form-taskname");
+    const taskDate = document.getElementById("form-taskdate");
+    const taskTime = document.getElementById("form-tasktime");
+    const clearValues = [taskName, taskDate, taskTime];
+
+    // Clear input values, hide popup
+    clearValues.forEach((input) => {
+        input.value = "";
+    });
     addTaskPopup.classList.remove("visible");
 }
 
 export function exitProjectPopup() {
     const addProjectPopup = document.querySelector(".add-project-popup");
-    // Clear the input values
+    const projectName = document.getElementById("form-projectname");
+    // Clear input values, hide popup
+    projectName.value = "";
     addProjectPopup.classList.remove("visible");
 }
 
@@ -94,7 +103,6 @@ export function loadSection(user, section) {
         case "all":
             console.log("here");
             loadProject(user.getProjects(), "All");
-
             break;
         case "today":
             break;
