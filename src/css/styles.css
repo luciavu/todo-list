@@ -541,3 +541,14 @@ form button {
 .invisible {
     display: none;
 }
+
+.task .icon-circle {
+    color: var(--dark-blue);
+    opacity: 0.4;
+    position: absolute;
+    z-index: -1;
+}
+
+.task .icon-circle-empty {
+    color: var(--dark-blue);
+}

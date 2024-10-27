@@ -14,6 +14,11 @@ export class Todo {
         this.completed = false;
         this.project = project;
     }
+
+    toggleComplete() {
+        this.completed = !this.completed;
+    }
+
     // Logic for checking if overdue using dates
 }
 

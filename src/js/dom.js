@@ -1,7 +1,8 @@
 import {
     addTaskEventListener,
     setupProjectEventListeners,
-    setupTaskEventListeners,
+    addDeleteTodoEventListener,
+    addCompleteTodoEventListener,
 } from "./events";
 
 export function addDOMProject(project) {
@@ -182,7 +183,16 @@ export function loadProject(projects, mainHeading) {
             taskMain.classList.add("task-main");
 
             const taskCheck = document.createElement("i");
-            taskCheck.classList.add("icon-circle-thin");
+            const taskCheckFill = document.createElement("i");
+            taskCheckFill.classList.add("icon-circle");
+
+            if (todo.completed) {
+                taskCheck.classList.add("icon-circle-empty");
+            } else {
+                taskCheck.classList.add("icon-circle-thin");
+                taskCheckFill.classList.add("invisible");
+            }
+
             taskCheck.classList.add("task-completed");
 
             const taskDetails = document.createElement("div");
@@ -206,12 +216,16 @@ export function loadProject(projects, mainHeading) {
             taskDetails.append(taskDescription);
             taskDetails.append(taskDate);
             taskMain.append(taskCheck);
+            taskMain.append(taskCheckFill);
             taskMain.append(taskDetails);
             task.append(taskMain);
             task.append(deleteTask);
 
             taskGroup.append(task);
-            setupTaskEventListeners(project, todo, task, taskCheck, deleteTask);
+            //setupTaskEventListeners(project, todo, task, taskCheck, deleteTask);
+            addDeleteTodoEventListener(deleteTask, project, todo, task);
+            addCompleteTodoEventListener(taskCheck, todo);
+            console.log(taskCheck, todo);
         }
 
         taskContainer.append(taskGroup);
@@ -273,6 +287,18 @@ function loadTodoIcons(div, priority, date, time, overdue) {
 export function removeTodo(project, todo, task) {
     const todoRef = project.getTodoById(todo.id);
     project.removeTodo(todoRef);
-
     task.remove();
+}
+
+export function toggleCompleteTodo(todo, icon) {
+    const iconBackground = icon.nextSibling; // Assuming this is always present
+
+    todo.toggleComplete();
+
+    // Update icon
+    const isCompleted = todo.completed;
+    icon.classList.toggle("icon-circle-thin", !isCompleted);
+    icon.classList.toggle("icon-circle-empty", isCompleted);
+    iconBackground.classList.toggle("invisible", !isCompleted);
+    iconBackground.classList.toggle("visible", isCompleted);
 }
