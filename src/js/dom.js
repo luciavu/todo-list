@@ -5,6 +5,7 @@ import {
 } from "./events";
 
 export function addDOMProject(project) {
+    // Add project folder
     const projectFolder = document.querySelector(".project-scrollable");
     const projectDiv = document.createElement("div");
     projectDiv.classList.add("project");
@@ -21,14 +22,20 @@ export function addDOMProject(project) {
     projectFolder.append(projectDiv);
 
     setupProjectEventListeners(projectDiv, project);
+
+    // Add project to list
+    const formOptions = document.getElementById("project-select");
+    const option = document.createElement("option");
+    option.value = project.name;
+    option.textContent = project.name;
+    formOptions.append(option);
+    console.log("added");
 }
 
-export function addDOMTask() {
-    setupTaskEventListeners(task, completeBtn, deleteBtn);
-}
-
-export function addTaskPopup() {
+export function addTaskPopup(name) {
     const popup = document.querySelector(".add-task-popup");
+    // Keep track of what project the task is under
+    popup.classList.add(name);
     console.log("add task popup");
     popup.classList.add("visible");
 }
@@ -40,7 +47,10 @@ export function addProjectPopup() {
 }
 
 export function exitTaskPopup() {
+    // Remove project tag
     const addTaskPopup = document.querySelector(".add-task-popup");
+    addTaskPopup.classList.remove(addTaskPopup.classList[1]);
+
     const taskName = document.getElementById("form-taskname");
     const taskDate = document.getElementById("form-taskdate");
     const taskTime = document.getElementById("form-tasktime");
@@ -69,9 +79,9 @@ export function setActive(element) {
     element.classList.add("active");
 }
 
-export function updateTaskCount(numTasks) {
+export function updateTaskCount(user) {
     const taskCounter = document.querySelector("task-summary");
-    taskCounter.textContent = `${this.totalTasks} tasks remaining`;
+    taskCounter.textContent = user.taskSummary();
 }
 
 export function collapseSidebar() {
@@ -95,13 +105,33 @@ function clearTasks() {
     }
 }
 
+export function hideProjectSelector() {
+    const selection = document.querySelector(".form-project");
+    selection.classList.add("invisible");
+}
+
+export function resetProjectSelector() {
+    const selection = document.querySelector(".form-project");
+    selection.classList.remove("invisible");
+}
+
+export function reloadMain(user) {
+    const group = document.querySelector(".active");
+    // If currently on project display, reload project
+    if (group.classList.contains("project")) {
+        const project = user.getProjectByName(group.id);
+        console.log(project);
+        loadProject(project, group.id);
+        console.log("reloaded");
+    } else {
+        // Section
+        loadSection(user, group);
+    }
+}
+
 export function loadSection(user, section) {
-    console.log(user);
-    console.log(section.id);
-    console.log(user.getProjects().length);
     switch (section.id) {
         case "all":
-            console.log("here");
             loadProject(user.getProjects(), "All");
             break;
         case "today":
@@ -121,14 +151,14 @@ export function loadProject(projects, mainHeading) {
     const heading = document.querySelector(".section-heading");
     heading.textContent = mainHeading;
 
-    console.log("projects:" + projects);
-
     // Change to array
     if (!Array.isArray(projects)) {
         projects = [projects];
     }
 
+    console.log(projects);
     for (let project of projects) {
+        console.log(project);
         const taskContainer = document.createElement("div");
         taskContainer.classList.add("task-container");
 
@@ -179,18 +209,21 @@ export function loadProject(projects, mainHeading) {
             taskMain.append(taskDetails);
             task.append(taskMain);
             task.append(deleteTask);
+
             taskGroup.append(task);
-            taskContainer.append(taskGroup);
-            main.append(taskContainer);
 
             setupTaskEventListeners(taskContainer, taskCheck, deleteTask);
         }
+
+        taskContainer.append(taskGroup);
+        main.append(taskContainer);
+
         // Add task button at the end
-        generateAddTaskBtn(taskGroup);
+        generateAddTaskBtn(taskGroup, project.name);
     }
 }
 
-function generateAddTaskBtn(div) {
+function generateAddTaskBtn(div, project) {
     // For every project listed, put add task button at the end
     const task = document.createElement("div");
     task.classList.add("task");
@@ -198,6 +231,7 @@ function generateAddTaskBtn(div) {
     const addTaskBtn = document.createElement("div");
     addTaskBtn.classList.add("add-task");
     addTaskBtn.classList.add("add-task-button");
+    addTaskBtn.classList.add(project);
 
     const icon = document.createElement("i");
     icon.classList.add("icon-plus");
@@ -209,7 +243,7 @@ function generateAddTaskBtn(div) {
 
     task.append(addTaskBtn);
     div.append(task);
-    addTaskEventListener(addTaskBtn);
+    addTaskEventListener(addTaskBtn, addTaskBtn.classList[2]);
 }
 
 function loadTodoIcons(div, priority, date, time, overdue) {

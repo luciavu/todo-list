@@ -13,6 +13,7 @@ function loadDefaultUser(user) {
 
 function loadDefaultTasks(user) {
     const defaultProjects = ["School", "Work", "Errands"];
+    console.log(user);
 
     defaultProjects.forEach((projectName) => {
         const project = addProject(projectName, user);

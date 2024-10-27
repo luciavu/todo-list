@@ -55,7 +55,11 @@ export class User {
 
     addNewProject(project) {
         this.projects.push(project);
-        console.log(this.projects.length);
+        console.log(this.getProjects());
+    }
+
+    getProjectByName(name) {
+        return this.projects.find((project) => project.name === name);
     }
 
     taskSummary() {

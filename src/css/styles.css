@@ -476,10 +476,17 @@ input {
     width: 100%;
 }
 
+select {
+    background-color: #f3f3f3;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.4rem;
+    margin-left: 1rem;
+}
+
 form input[type="text" i],
 input[type="time" i],
 input[type="date" i] {
-    border-radius: 0.5rem;
     padding: 1rem;
     box-sizing: border-box;
 }
@@ -529,4 +536,8 @@ form button {
 
 .visible {
     display: block;
+}
+
+.invisible {
+    display: none;
 }

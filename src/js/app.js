@@ -1,5 +1,5 @@
 import { addDOMProject } from "./dom.js";
-import { Project, Todo } from "./models.js";
+import { Project, Todo, User } from "./models.js";
 
 export function addProject(name, user) {
     const project = new Project(name);

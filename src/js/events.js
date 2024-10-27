@@ -8,8 +8,13 @@ import {
     collapseSidebar,
     loadProject,
     loadSection,
+    addDOMProject,
+    hideProjectSelector,
+    resetProjectSelector,
+    reloadMain,
 } from "./dom";
 
+import { addProject } from "./app.js";
 import { retrieveProjectDetails, retrieveTaskDetails } from "./form.js";
 
 export function setupMainEventListeners(user) {
@@ -65,6 +70,7 @@ export function setupMainEventListeners(user) {
     const closeTask = document.querySelector(".exit-task-popup");
     closeTask.addEventListener("click", () => {
         console.log("User exited task popup");
+        resetProjectSelector();
         exitTaskPopup();
     });
     const closeProject = document.querySelector(".exit-project-popup");
@@ -76,13 +82,15 @@ export function setupMainEventListeners(user) {
     // Popup submit buttons
     const taskBtn = document.getElementById("addTaskBtn");
     taskBtn.addEventListener("click", () => {
-        retrieveTaskDetails();
+        retrieveTaskDetails(user);
+        reloadMain(user);
+        resetProjectSelector();
         exitTaskPopup();
     });
 
     const projectBtn = document.getElementById("addProjectBtn");
     projectBtn.addEventListener("click", () => {
-        retrieveProjectDetails();
+        const project = addProject(retrieveProjectDetails(), user);
         exitProjectPopup();
     });
 }
@@ -121,8 +129,10 @@ export function setupProjectEventListeners(projectDiv, project) {
     });
 }
 
-export function addTaskEventListener(button) {
+export function addTaskEventListener(button, name) {
     button.addEventListener("click", () => {
-        console.log("add task through main");
+        console.log(`add task through ${name}`);
+        addTaskPopup(name);
+        hideProjectSelector();
     });
 }
