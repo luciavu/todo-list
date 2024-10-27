@@ -2,7 +2,10 @@ import { updateTaskCount } from "./dom";
 import { setupUserEventListeners } from "./events";
 
 export class Todo {
+    static idCounter = 0;
+
     constructor(description, dueDate, dueTime, priority, project) {
+        this.id = ++Todo.idCounter;
         this.description = description;
         this.dueDate = dueDate;
         this.dueTime = dueTime;
@@ -22,6 +25,18 @@ export class Project {
 
     addTodo(todo) {
         this.todos.push(todo);
+    }
+
+    getTodoList() {
+        return this.todos;
+    }
+
+    removeTodo(todo) {
+        this.getTodoList().pop(todo);
+    }
+
+    getTodoById(id) {
+        return this.getTodoList().find((todo) => todo.id === id);
     }
 
     toString() {

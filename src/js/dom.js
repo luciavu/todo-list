@@ -211,8 +211,7 @@ export function loadProject(projects, mainHeading) {
             task.append(deleteTask);
 
             taskGroup.append(task);
-
-            setupTaskEventListeners(taskContainer, taskCheck, deleteTask);
+            setupTaskEventListeners(project, todo, task, taskCheck, deleteTask);
         }
 
         taskContainer.append(taskGroup);
@@ -269,4 +268,11 @@ function loadTodoIcons(div, priority, date, time, overdue) {
         div.append(icon);
         div.append(overdueDiv);
     }
+}
+
+export function removeTodo(project, todo, task) {
+    const todoRef = project.getTodoById(todo.id);
+    project.removeTodo(todoRef);
+
+    task.remove();
 }

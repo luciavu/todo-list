@@ -12,6 +12,7 @@ import {
     hideProjectSelector,
     resetProjectSelector,
     reloadMain,
+    removeTodo,
 } from "./dom";
 
 import { addProject } from "./app.js";
@@ -110,9 +111,16 @@ export function setupUserEventListeners(user) {
     });
 }
 
-export function setupTaskEventListeners(task, completeBtn, deleteBtn) {
+export function setupTaskEventListeners(
+    project,
+    todo,
+    task,
+    completeBtn,
+    deleteBtn
+) {
     deleteBtn.addEventListener("click", () => {
         // Remove task
+        removeTodo(project, todo, task);
         console.log("Remove task");
     });
     // Remove task from all, move to complete on refresh
