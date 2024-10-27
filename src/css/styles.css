@@ -46,6 +46,20 @@
     #projectForm button {
         width: 100%;
     }
+
+    body .arrow i {
+        display: block;
+    }
+
+    body .sidebar {
+        display: block;
+    }
+
+    html body main {
+        margin: 0;
+        display: none;
+        width: 100%;
+    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -76,12 +90,20 @@ body {
 }
 
 .arrow i {
+    display: none;
     color: var(--dark-grey);
     font-size: 1.4rem;
     position: absolute;
-    right: 1.4rem;
     top: 2rem;
     cursor: pointer;
+}
+
+.right i {
+    right: 1.4rem;
+}
+
+.left i {
+    left: 1.4rem;
 }
 
 button {

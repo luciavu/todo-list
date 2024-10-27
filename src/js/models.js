@@ -1,7 +1,8 @@
+import { updateTaskCount } from "./dom";
 import { setupUserEventListeners } from "./events";
 
 export class Todo {
-    constructor(description, dueDate, dueTime, priority, project = "School") {
+    constructor(description, dueDate, dueTime, priority, project) {
         this.description = description;
         this.dueDate = dueDate;
         this.dueTime = dueTime;
@@ -10,7 +11,6 @@ export class Todo {
         this.completed = false;
         this.project = project;
     }
-
     // Logic for checking if overdue using dates
 }
 
@@ -43,18 +43,19 @@ export class User {
         setupUserEventListeners(this);
     }
 
-    getName() {
-        return this.name;
-    }
-
     setName(name) {
         this.name = name;
         console.log(this);
         return this.name;
     }
 
+    getProjects() {
+        return this.projects;
+    }
+
     addNewProject(project) {
         this.projects.push(project);
+        console.log(this.projects.length);
     }
 
     taskSummary() {
@@ -64,10 +65,12 @@ export class User {
     // User adds a task
     incrementTasks() {
         this.totalTasks++;
+        updateTaskCount(this.totalTasks);
     }
 
     // User completes or deletes a task
     decrementTasks() {
         this.totalTasks--;
+        updateTaskCount(this.totalTasks);
     }
 }

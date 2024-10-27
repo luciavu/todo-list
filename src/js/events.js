@@ -4,12 +4,17 @@ import {
     setActive,
     exitTaskPopup,
     exitProjectPopup,
+    expandSidebar,
+    collapseSidebar,
+    adjustDisplay,
+    loadProject,
+    loadSection,
 } from "./dom";
 
-export function setupMainEventListeners() {
+export function setupMainEventListeners(user) {
     // Add task from sidebar/notes
     const sideAddTaskBtn = document.getElementById("add-task");
-    sideAddTaskBtn.addEventListener("click", () => {
+    sideAddTaskBtn.addEventListener("click", (user) => {
         addTaskPopup();
         console.log("Add task button clicked");
     });
@@ -26,7 +31,7 @@ export function setupMainEventListeners() {
     for (let section of sections) {
         section.addEventListener("click", () => {
             setActive(section);
-            loadMain(section);
+            loadSection(user, section);
             console.log(`${section.id} section clicked`);
         });
     }
@@ -43,8 +48,15 @@ export function setupMainEventListeners() {
     });
 
     // Sidebar collapse button
-    const collapse = document.querySelector(".arrow");
+    const collapse = document.querySelector(".left");
     collapse.addEventListener("click", () => {
+        expandSidebar();
+        console.log("User opened the sidebar");
+    });
+
+    const focus = document.querySelector(".right");
+    focus.addEventListener("click", () => {
+        collapseSidebar();
         console.log("User collapsed the sidebar");
     });
 
@@ -92,10 +104,16 @@ export function setupTaskEventListeners(task, completeBtn, deleteBtn) {
     });
 }
 
-export function setupProjectEventListeners(project) {
-    project.addEventListener("click", () => {
-        console.log(`${project.id} folder clicked`);
-        // Change active project/section
-        setActive(project);
+export function setupProjectEventListeners(projectDiv, project) {
+    projectDiv.addEventListener("click", () => {
+        console.log(`${project.name} folder clicked`);
+        setActive(projectDiv);
+        loadProject(project, project.name);
+    });
+}
+
+export function addTaskEventListener(button) {
+    button.addEventListener("click", () => {
+        console.log("add task through main");
     });
 }
