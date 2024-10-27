@@ -24,14 +24,12 @@ export function setupMainEventListeners(user) {
     const sideAddTaskBtn = document.getElementById("add-task");
     sideAddTaskBtn.addEventListener("click", (user) => {
         addTaskPopup();
-        console.log("Add task button clicked");
     });
 
     // Add project
     const addProjectButton = document.querySelector(".add-project");
     addProjectButton.addEventListener("click", () => {
         addProjectPopup();
-        console.log("Add project button clicked");
     });
 
     // Click on section
@@ -40,7 +38,6 @@ export function setupMainEventListeners(user) {
         section.addEventListener("click", () => {
             setActive(section);
             loadSection(user, section);
-            console.log(`${section.id} section clicked`);
         });
     }
 
@@ -59,25 +56,21 @@ export function setupMainEventListeners(user) {
     const collapse = document.querySelector(".left");
     collapse.addEventListener("click", () => {
         expandSidebar();
-        console.log("User opened the sidebar");
     });
 
     const focus = document.querySelector(".right");
     focus.addEventListener("click", () => {
         collapseSidebar();
-        console.log("User collapsed the sidebar");
     });
 
     // Popup exit
     const closeTask = document.querySelector(".exit-task-popup");
     closeTask.addEventListener("click", () => {
-        console.log("User exited task popup");
         resetProjectSelector();
         exitTaskPopup();
     });
     const closeProject = document.querySelector(".exit-project-popup");
     closeProject.addEventListener("click", () => {
-        console.log("User exited project popup");
         exitProjectPopup();
     });
 

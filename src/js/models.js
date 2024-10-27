@@ -97,4 +97,15 @@ export class User {
         this.totalTasks--;
         updateTaskCount(this.totalTasks);
     }
+
+    getCompletedProjects() {
+        return this.projects
+            .filter((project) =>
+                project.getTodoList().some((todo) => todo.completed)
+            )
+            .map((project) => ({
+                ...project,
+                todos: project.getTodoList().filter((todo) => todo.completed),
+            }));
+    }
 }

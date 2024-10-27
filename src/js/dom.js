@@ -30,20 +30,17 @@ export function addDOMProject(project) {
     option.value = project.name;
     option.textContent = project.name;
     formOptions.append(option);
-    console.log("added");
 }
 
 export function addTaskPopup(name) {
     const popup = document.querySelector(".add-task-popup");
     // Keep track of what project the task is under
     popup.classList.add(name);
-    console.log("add task popup");
     popup.classList.add("visible");
 }
 
 export function addProjectPopup() {
     const popup = document.querySelector(".add-project-popup");
-    console.log("add project popup");
     popup.classList.add("visible");
 }
 
@@ -121,9 +118,7 @@ export function reloadMain(user) {
     // If currently on project display, reload project
     if (group.classList.contains("project")) {
         const project = user.getProjectByName(group.id);
-        console.log(project);
         loadProject(project, group.id);
-        console.log("reloaded");
     } else {
         // Section
         loadSection(user, group);
@@ -131,16 +126,22 @@ export function reloadMain(user) {
 }
 
 export function loadSection(user, section) {
+    const projects = user.getProjects();
+
     switch (section.id) {
         case "all":
-            loadProject(user.getProjects(), "All");
-            break;
+            loadProject(projects, "All");
+            return;
         case "today":
-            break;
+            return;
         case "scheduled":
-            break;
+            return;
         case "completed":
-            break;
+            const completedProjects = user.getCompletedProjects();
+            console.log(completedProjects);
+            loadProject(completedProjects, "Completed");
+
+            return;
     }
 }
 
@@ -157,9 +158,7 @@ export function loadProject(projects, mainHeading) {
         projects = [projects];
     }
 
-    console.log(projects);
     for (let project of projects) {
-        console.log(project);
         const taskContainer = document.createElement("div");
         taskContainer.classList.add("task-container");
 
@@ -188,9 +187,16 @@ export function loadProject(projects, mainHeading) {
 
             if (todo.completed) {
                 taskCheck.classList.add("icon-circle-empty");
+                if (mainHeading !== "Completed") {
+                    continue;
+                } else {
+                    deleteTask.style.display = "none";
+                }
             } else {
                 taskCheck.classList.add("icon-circle-thin");
                 taskCheckFill.classList.add("invisible");
+
+                addCompleteTodoEventListener(taskCheck, todo);
             }
 
             taskCheck.classList.add("task-completed");
@@ -222,10 +228,7 @@ export function loadProject(projects, mainHeading) {
             task.append(deleteTask);
 
             taskGroup.append(task);
-            //setupTaskEventListeners(project, todo, task, taskCheck, deleteTask);
             addDeleteTodoEventListener(deleteTask, project, todo, task);
-            addCompleteTodoEventListener(taskCheck, todo);
-            console.log(taskCheck, todo);
         }
 
         taskContainer.append(taskGroup);
@@ -286,6 +289,7 @@ function loadTodoIcons(div, priority, date, time, overdue) {
 
 export function removeTodo(project, todo, task) {
     const todoRef = project.getTodoById(todo.id);
+    console.log(todoRef);
     project.removeTodo(todoRef);
     task.remove();
 }
