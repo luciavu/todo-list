@@ -1,5 +1,7 @@
 import { updateTaskCount } from "./dom";
 import { setupUserEventListeners } from "./events";
+import { formatDate } from "./app.js";
+import { isBefore, isAfter, isSameDay } from "date-fns";
 
 export class Todo {
     static idCounter = 0;
@@ -13,13 +15,29 @@ export class Todo {
         this.priority = priority;
         this.completed = false;
         this.project = project;
+        this.init();
+    }
+
+    init() {
+        this.isOverdue();
     }
 
     toggleComplete() {
         this.completed = !this.completed;
     }
 
-    // Logic for checking if overdue using dates
+    getDate() {
+        return formatDate(this.dueDate, this.dueTime);
+    }
+
+    isOverdue() {
+        // Get the current date
+        const currentDate = new Date();
+
+        if (isBefore(this.getDate(), currentDate)) {
+            this.overdue = true;
+        }
+    }
 }
 
 export class Project {
@@ -106,6 +124,46 @@ export class User {
             .map((project) => ({
                 ...project,
                 todos: project.getTodoList().filter((todo) => todo.completed),
+            }));
+    }
+
+    getTodaysProjects() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Reset today's date
+
+        return this.projects
+            .filter((project) =>
+                project.getTodoList().some((todo) => {
+                    const todoDate = new Date(todo.getDate());
+                    return isSameDay(todoDate, today); // Check date is same as today
+                })
+            )
+            .map((project) => ({
+                ...project,
+                todos: project.getTodoList().filter((todo) => {
+                    const todoDate = new Date(todo.getDate());
+                    return isSameDay(todoDate, today); // Filter todos
+                }),
+            }));
+    }
+
+    getScheduledProjects() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        return this.projects
+            .filter((project) =>
+                project.getTodoList().some((todo) => {
+                    const todoDate = new Date(todo.getDate());
+                    return isAfter(todoDate, today); // Check todo date is after today
+                })
+            )
+            .map((project) => ({
+                ...project,
+                todos: project.getTodoList().filter((todo) => {
+                    const todoDate = new Date(todo.getDate());
+                    return isAfter(todoDate, today);
+                }),
             }));
     }
 }

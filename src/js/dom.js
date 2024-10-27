@@ -133,14 +133,19 @@ export function loadSection(user, section) {
             loadProject(projects, "All");
             return;
         case "today":
+            const todaysProjects = user.getTodaysProjects();
+            console.log(todaysProjects);
+            loadProject(todaysProjects, "Today");
             return;
         case "scheduled":
+            const scheduledProjects = user.getScheduledProjects();
+            console.log(scheduledProjects);
+            loadProject(scheduledProjects, "Scheduled");
             return;
         case "completed":
             const completedProjects = user.getCompletedProjects();
             console.log(completedProjects);
             loadProject(completedProjects, "Completed");
-
             return;
     }
 }

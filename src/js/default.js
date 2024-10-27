@@ -17,7 +17,7 @@ function loadDefaultTasks(user) {
 
     defaultProjects.forEach((projectName) => {
         const project = addProject(projectName, user);
-        addTodo("Add a task", `28/10/24`, "12:00am", true, project);
+        addTodo("Add a task", `29/10/24`, "12:00am", true, project);
 
         addTodo("Task 2", `28/10/24`, `12:00am`, true, project);
     });
