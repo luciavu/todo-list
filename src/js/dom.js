@@ -142,17 +142,14 @@ export function loadSection(user, section) {
             return;
         case "today":
             const todaysProjects = getTodaysProjects(projects);
-            console.log(todaysProjects);
             loadProject(todaysProjects, "Today");
             return;
         case "scheduled":
             const scheduledProjects = getScheduledProjects(projects);
-            console.log(scheduledProjects);
             loadProject(scheduledProjects, "Scheduled");
             return;
         case "completed":
             const completedProjects = getCompletedProjects(projects);
-            console.log(completedProjects);
             loadProject(completedProjects, "Completed");
             return;
         case "search-bar":
@@ -160,7 +157,6 @@ export function loadSection(user, section) {
                 projects,
                 section.value
             );
-            console.log(searchedProjects, section.value);
             loadProject(
                 searchedProjects,
                 `Search result for "${section.value}"`

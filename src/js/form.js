@@ -26,5 +26,4 @@ export function retrieveTaskDetails(user) {
         user.getProjectByName(projectName),
         user
     );
-    console.log(user.getProjectByName(projectName));
 }

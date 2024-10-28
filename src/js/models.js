@@ -60,12 +60,6 @@ export class Project {
     getTodoById(id) {
         return this.getTodoList().find((todo) => todo.id === id);
     }
-
-    toString() {
-        console.log(
-            `I am project ${this.name} with ${this.todos.length} todos`
-        );
-    }
 }
 
 export class User {
@@ -82,12 +76,10 @@ export class User {
 
     setName(name) {
         this.name = name;
-        console.log(this);
         return this.name;
     }
 
     getProjects() {
-        console.log("here");
         return this.projects;
     }
 

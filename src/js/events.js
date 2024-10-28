@@ -48,7 +48,6 @@ export function setupMainEventListeners(user) {
         }
     });
     searchbar.addEventListener("blur", () => {
-        console.log(`User searched for ${searchbar.value}`);
         if (searchbar.value.length > 0) {
             loadSection(user, searchbar);
         } else {
@@ -107,7 +106,6 @@ export function setupUserEventListeners(user) {
 
     username.addEventListener("blur", () => {
         user.setName(username.value);
-        console.log(`User changed their name to ${username.value}`);
     });
 }
 
@@ -115,7 +113,6 @@ export function addDeleteTodoEventListener(deleteBtn, project, todo, task) {
     deleteBtn.addEventListener("click", () => {
         // Remove task
         removeTodo(project, todo, task);
-        console.log("Remove task");
     });
 }
 
@@ -123,13 +120,11 @@ export function addCompleteTodoEventListener(completeBtn, todo) {
     // Remove task from all, move to complete on refresh
     completeBtn.addEventListener("click", () => {
         toggleCompleteTodo(todo, completeBtn);
-        console.log("Complete task", todo);
     });
 }
 
 export function setupProjectEventListeners(projectDiv, project) {
     projectDiv.addEventListener("click", () => {
-        console.log(`${project.name} folder clicked`);
         setActive(projectDiv);
         loadProject(project, project.name);
     });
@@ -137,7 +132,6 @@ export function setupProjectEventListeners(projectDiv, project) {
 
 export function addTaskEventListener(button, name) {
     button.addEventListener("click", () => {
-        console.log(`add task through ${name}`);
         addTaskPopup(name);
         hideProjectSelector();
     });

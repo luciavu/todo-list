@@ -20,8 +20,6 @@ export function addTodo(
     user
 ) {
     const todo = new Todo(description, dueDate, dueTime, priority, project);
-    console.log(dueDate, dueTime);
-    console.log(user);
     project.addTodo(todo);
 }
 
@@ -86,7 +84,6 @@ export function getScheduledProjects(projects) {
 }
 
 export function getSearchedProjects(projects, searchValue) {
-    console.log(searchValue);
     const lowerCaseSearchValue = searchValue.toLowerCase();
 
     return projects
