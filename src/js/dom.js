@@ -163,6 +163,7 @@ export function loadSection(user, section) {
                 projects,
                 section.value
             );
+            console.log(searchedProjects);
             loadProject(
                 searchedProjects,
                 `Search result for "${section.value}"`,
@@ -223,8 +224,8 @@ export function loadProject(projects, mainHeading, user) {
                 taskCheck.classList.add("icon-circle-thin");
                 taskCheckFill.classList.add("invisible");
                 counter++;
-                addCompleteTodoEventListener(taskCheck, todo, user);
             }
+            addCompleteTodoEventListener(taskCheck, todo, user);
 
             taskCheck.classList.add("task-completed");
 

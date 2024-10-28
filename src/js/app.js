@@ -128,20 +128,22 @@ export function getSearchedProjects(projects, searchValue) {
         .filter((project) =>
             project
                 .getTodoList()
-                .some((todo) =>
-                    todo.description
-                        .toLowerCase()
-                        .includes(lowerCaseSearchValue)
+                .some(
+                    (todo) =>
+                        todo.description
+                            .toLowerCase()
+                            .includes(lowerCaseSearchValue) && !todo.completed
                 )
         )
         .map((project) => ({
             ...project,
             todos: project
                 .getTodoList()
-                .filter((todo) =>
-                    todo.description
-                        .toLowerCase()
-                        .includes(lowerCaseSearchValue)
+                .filter(
+                    (todo) =>
+                        todo.description
+                            .toLowerCase()
+                            .includes(lowerCaseSearchValue) && !todo.completed
                 ),
         }));
 }
