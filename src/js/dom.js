@@ -77,9 +77,9 @@ export function setActive(element) {
     element.classList.add("active");
 }
 
-export function updateTaskCount(user) {
-    const taskCounter = document.querySelector("task-summary");
-    taskCounter.textContent = user.taskSummary();
+export function updateTaskCount(num) {
+    const taskCounter = document.querySelector(".task-summary");
+    taskCounter.textContent = `${num} tasks remaining`;
 }
 
 export function collapseSidebar() {
@@ -153,6 +153,7 @@ export function loadSection(user, section) {
 export function loadProject(projects, mainHeading) {
     // Clear task display
     clearTasks();
+    let counter = 0;
     const main = document.querySelector("main");
 
     const heading = document.querySelector(".section-heading");
@@ -200,6 +201,7 @@ export function loadProject(projects, mainHeading) {
             } else {
                 taskCheck.classList.add("icon-circle-thin");
                 taskCheckFill.classList.add("invisible");
+                counter++;
 
                 addCompleteTodoEventListener(taskCheck, todo);
             }
@@ -241,6 +243,9 @@ export function loadProject(projects, mainHeading) {
 
         // Add task button at the end
         generateAddTaskBtn(taskGroup, project.name);
+
+        // Update task summary
+        updateTaskCount(counter);
     }
 }
 
@@ -294,7 +299,10 @@ function loadTodoIcons(div, priority, date, time, overdue) {
 
 export function removeTodo(project, todo, task) {
     const todoRef = project.getTodoById(todo.id);
-    console.log(todoRef);
+    let tempTotalTasks = parseInt(
+        document.querySelector(".task-summary").textContent[0]
+    );
+    updateTaskCount(--tempTotalTasks);
     project.removeTodo(todoRef);
     task.remove();
 }

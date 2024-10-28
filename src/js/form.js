@@ -23,7 +23,8 @@ export function retrieveTaskDetails(user) {
         taskDate,
         taskTime,
         priority,
-        user.getProjectByName(projectName)
+        user.getProjectByName(projectName),
+        user
     );
     console.log(user.getProjectByName(projectName));
 }

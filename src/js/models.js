@@ -88,32 +88,16 @@ export class User {
     }
 
     getProjects() {
+        console.log("here");
         return this.projects;
     }
 
     addNewProject(project) {
         this.projects.push(project);
-        console.log(this.getProjects());
     }
 
     getProjectByName(name) {
         return this.projects.find((project) => project.name === name);
-    }
-
-    taskSummary() {
-        return `${this.totalTasks} tasks remaining`;
-    }
-
-    // User adds a task
-    incrementTasks() {
-        this.totalTasks++;
-        updateTaskCount(this.totalTasks);
-    }
-
-    // User completes or deletes a task
-    decrementTasks() {
-        this.totalTasks--;
-        updateTaskCount(this.totalTasks);
     }
 
     getCompletedProjects() {

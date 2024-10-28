@@ -1,5 +1,5 @@
-import { addDOMProject } from "./dom.js";
-import { Project, Todo } from "./models.js";
+import { addDOMProject, updateTaskCount } from "./dom.js";
+import { Project, Todo, User } from "./models.js";
 
 import { parse } from "date-fns";
 
@@ -10,9 +10,17 @@ export function addProject(name, user) {
     return project;
 }
 
-export function addTodo(description, dueDate, dueTime, priority, project) {
+export function addTodo(
+    description,
+    dueDate,
+    dueTime,
+    priority,
+    project,
+    user
+) {
     const todo = new Todo(description, dueDate, dueTime, priority, project);
     console.log(dueDate, dueTime);
+    console.log(user);
     project.addTodo(todo);
 }
 
