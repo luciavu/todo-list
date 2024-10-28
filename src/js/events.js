@@ -8,7 +8,6 @@ import {
     collapseSidebar,
     loadProject,
     loadSection,
-    addDOMProject,
     hideProjectSelector,
     resetProjectSelector,
     reloadMain,
@@ -50,6 +49,13 @@ export function setupMainEventListeners(user) {
     });
     searchbar.addEventListener("blur", () => {
         console.log(`User searched for ${searchbar.value}`);
+        if (searchbar.value.length > 0) {
+            loadSection(user, searchbar);
+        } else {
+            const allSection = document.getElementById("all");
+            loadSection(user, allSection);
+            setActive(allSection);
+        }
     });
 
     // Sidebar collapse button

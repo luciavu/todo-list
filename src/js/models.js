@@ -1,7 +1,6 @@
-import { updateTaskCount } from "./dom";
 import { setupUserEventListeners } from "./events";
 import { formatDate } from "./app.js";
-import { isBefore, isAfter, isSameDay } from "date-fns";
+import { isBefore } from "date-fns";
 
 export class Todo {
     static idCounter = 0;
@@ -98,56 +97,5 @@ export class User {
 
     getProjectByName(name) {
         return this.projects.find((project) => project.name === name);
-    }
-
-    getCompletedProjects() {
-        return this.projects
-            .filter((project) =>
-                project.getTodoList().some((todo) => todo.completed)
-            )
-            .map((project) => ({
-                ...project,
-                todos: project.getTodoList().filter((todo) => todo.completed),
-            }));
-    }
-
-    getTodaysProjects() {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0); // Reset today's date
-
-        return this.projects
-            .filter((project) =>
-                project.getTodoList().some((todo) => {
-                    const todoDate = new Date(todo.getDate());
-                    return isSameDay(todoDate, today); // Check date is same as today
-                })
-            )
-            .map((project) => ({
-                ...project,
-                todos: project.getTodoList().filter((todo) => {
-                    const todoDate = new Date(todo.getDate());
-                    return isSameDay(todoDate, today); // Filter todos
-                }),
-            }));
-    }
-
-    getScheduledProjects() {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        return this.projects
-            .filter((project) =>
-                project.getTodoList().some((todo) => {
-                    const todoDate = new Date(todo.getDate());
-                    return isAfter(todoDate, today); // Check todo date is after today
-                })
-            )
-            .map((project) => ({
-                ...project,
-                todos: project.getTodoList().filter((todo) => {
-                    const todoDate = new Date(todo.getDate());
-                    return isAfter(todoDate, today);
-                }),
-            }));
     }
 }

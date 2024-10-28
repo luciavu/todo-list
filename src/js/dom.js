@@ -5,6 +5,13 @@ import {
     addCompleteTodoEventListener,
 } from "./events";
 
+import {
+    getScheduledProjects,
+    getCompletedProjects,
+    getTodaysProjects,
+    getSearchedProjects,
+} from "./app.js";
+
 export function addDOMProject(project) {
     // Add project folder
     const projectFolder = document.querySelector(".project-scrollable");
@@ -79,7 +86,8 @@ export function setActive(element) {
 
 export function updateTaskCount(num) {
     const taskCounter = document.querySelector(".task-summary");
-    taskCounter.textContent = `${num} tasks remaining`;
+    const plural = num == 1 ? "" : "s";
+    taskCounter.textContent = `${num} task${plural} remaining`;
 }
 
 export function collapseSidebar() {
@@ -133,19 +141,31 @@ export function loadSection(user, section) {
             loadProject(projects, "All");
             return;
         case "today":
-            const todaysProjects = user.getTodaysProjects();
+            const todaysProjects = getTodaysProjects(projects);
             console.log(todaysProjects);
             loadProject(todaysProjects, "Today");
             return;
         case "scheduled":
-            const scheduledProjects = user.getScheduledProjects();
+            const scheduledProjects = getScheduledProjects(projects);
             console.log(scheduledProjects);
             loadProject(scheduledProjects, "Scheduled");
             return;
         case "completed":
-            const completedProjects = user.getCompletedProjects();
+            const completedProjects = getCompletedProjects(projects);
             console.log(completedProjects);
             loadProject(completedProjects, "Completed");
+            return;
+        case "search-bar":
+            const searchedProjects = getSearchedProjects(
+                projects,
+                section.value
+            );
+            console.log(searchedProjects, section.value);
+            loadProject(
+                searchedProjects,
+                `Search result for "${section.value}"`
+            );
+        default:
             return;
     }
 }
