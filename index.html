@@ -1,1 +1,165 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Todo List</title><script defer="defer" src="main.js"></script></head><body><div class="add-task-popup"><div class="centre"><form id="taskForm"><div class="form-header"><div class="form-title">Add todo</div><div class="exit-task-popup exit">&times;</div></div><div class="form-container"><div class="form-fields"><div class="form-project"><label for="project-select">Choose a project:</label> <select id="project-select"></select></div><div class="form-taskname"><label for="form-taskname"></label> <input id="form-taskname" name="form-taskname" placeholder="Task" required maxlength="25"/></div><div class="time-container"><div class="form-taskdate"><label for="form-taskdate"></label> <input type="date" id="form-taskdate" name="form-taskdate"/></div><div class="form-tasktime"><label for="form-tasktime"></label> <input type="time" step="1800" id="form-tasktime" name="form-tasktime" required/></div></div><div class="flex-container"><div class="priority"><label for="is-priority">Priority</label> <input type="checkbox" name="is-priority" id="is-priority"/></div><button id="addTaskBtn" type="submit" onclick="event.preventDefault();">Done</button></div></div></div></form></div></div><div class="add-project-popup"><div class="centre"><form id="projectForm"><div class="form-header"><div class="form-title">Add project</div><div class="exit-project-popup exit">&times;</div></div><div class="form-container"><div class="form-projectname"><label for="form-projectname"></label> <input id="form-projectname" name="form-projectname" placeholder="Project Name" required maxlength="15"/> <button id="addProjectBtn" type="submit" onclick="event.preventDefault();">Done</button></div></div></form></div></div><div class="sidebar"><div class="container"><div class="arrow right"><i class="icon-right-open"></i></div><div class="user-details"><div class="credits"><a href="https://github.com/luciavu/todo-list" target="_blank"><i class="icon-github-circled"></i></a></div><div class="user-detail-text"><div class="username"><input name="name" id="name" placeholder="New user"/></div><div class="task-summary"></div></div></div><div class="search"><input name="search-bar" id="search-bar" placeholder="Search tasks"/> <a href="#"><i class="icon-search"></i></a></div><div class="actions"><button id="add-task" class="add-task-button"><i class="icon-plus-circled"></i>Add task</button> <button id="all" class="active section"><i class="icon-inbox-1"></i>All</button> <button id="today" class="section"><i class="icon-attach"></i><div class="button-text">Today</div></button> <button id="scheduled" class="section"><i class="icon-calendar"></i>Scheduled</button> <button id="completed" class="section"><i class="icon-bookmark-empty"></i>Completed</button></div><div class="project-container"><div class="project-heading">Projects 🌀⋆✩</div><div class="project-scrollable"><div class="add-project"><i class="icon-plus"></i><div class="project-name">Add project</div></div></div></div></div></div><main><div class="arrow left"><i class="icon-left-open"></i></div><div class="section-heading">All</div></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Todo List</title>
+        <script defer="defer" src="main.js"></script>
+    </head>
+    <body>
+        <div class="add-task-popup">
+            <div class="centre">
+                <form id="taskForm">
+                    <div class="form-header">
+                        <div class="form-title">Add todo</div>
+                        <div class="exit-task-popup exit">&times;</div>
+                    </div>
+                    <div class="form-container">
+                        <div class="form-fields">
+                            <div class="form-project">
+                                <label for="project-select">Choose a project:</label>
+                                <select id="project-select"></select>
+                            </div>
+                            <div class="form-taskname">
+                                <label for="form-taskname"></label>
+                                <input
+                                    type="text"
+                                    id="form-taskname"
+                                    name="form-taskname"
+                                    placeholder="Task"
+                                    required
+                                    maxlength="25"
+                                />
+                            </div>
+                            <div class="time-container">
+                                <div class="form-taskdate">
+                                    <label for="form-taskdate"></label>
+                                    <input
+                                        type="date"
+                                        id="form-taskdate"
+                                        name="form-taskdate"
+                                    />
+                                </div>
+                                <div class="form-tasktime">
+                                    <label for="form-tasktime"></label>
+                                    <input
+                                        type="time"
+                                        step="1800"
+                                        id="form-tasktime"
+                                        name="form-tasktime"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div class="flex-container">
+                                <div class="priority">
+                                    <label for="is-priority">Priority</label>
+                                    <input
+                                        type="checkbox"
+                                        name="is-priority"
+                                        id="is-priority"
+                                    />
+                                </div>
+                                <button
+                                    id="addTaskBtn"
+                                    type="submit"
+                                    onclick="event.preventDefault();"
+                                >
+                                    Done
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="add-project-popup">
+            <div class="centre">
+                <form id="projectForm">
+                    <div class="form-header">
+                        <div class="form-title">Add project</div>
+                        <div class="exit-project-popup exit">&times;</div>
+                    </div>
+                    <div class="form-container">
+                        <div class="form-projectname">
+                            <label for="form-projectname"></label>
+                            <input
+                                type="text"
+                                id="form-projectname"
+                                name="form-projectname"
+                                placeholder="Project Name"
+                                required
+                                maxlength="15"
+                            />
+                            <button
+                                id="addProjectBtn"
+                                type="submit"
+                                onclick="event.preventDefault();"
+                            >
+                                Done
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="container">
+                <div class="arrow right"><i class="icon-right-open"></i></div>
+                <div class="user-details">
+                    <div class="credits">
+                        <a href="https://github.com/luciavu/todo-list" target="_blank"
+                            ><i class="icon-github-circled"></i
+                        ></a>
+                    </div>
+                    <div class="user-detail-text">
+                        <div class="username">
+                            <input name="name" id="name" placeholder="New user" />
+                        </div>
+                        <div class="task-summary"></div>
+                    </div>
+                </div>
+                <div class="search">
+                    <input
+                        type="text"
+                        name="search-bar"
+                        id="search-bar"
+                        placeholder="Search tasks"
+                    />
+                    <a href="#"><i class="icon-search"></i></a>
+                </div>
+                <div class="actions">
+                    <button id="add-task" class="add-task-button">
+                        <i class="icon-plus-circled"></i>Add task
+                    </button>
+                    <button id="all" class="active section">
+                        <i class="icon-inbox-1"></i>All
+                    </button>
+                    <button id="today" class="section">
+                        <i class="icon-attach"></i>
+                        <div class="button-text">Today</div>
+                    </button>
+                    <button id="scheduled" class="section">
+                        <i class="icon-calendar"></i>Scheduled
+                    </button>
+                    <button id="completed" class="section">
+                        <i class="icon-bookmark-empty"></i>Completed
+                    </button>
+                </div>
+                <div class="project-container">
+                    <div class="project-heading">Projects 🌀⋆✩</div>
+                    <div class="project-scrollable">
+                        <div class="add-project">
+                            <i class="icon-plus"></i>
+                            <div class="project-name">Add project</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <main>
+            <div class="arrow left"><i class="icon-left-open"></i></div>
+            <div class="section-heading">All</div>
+        </main>
+    </body>
+</html>
