@@ -11,7 +11,7 @@ export function retrieveTaskDetails(user) {
     let projectName = document.getElementById("project-select").value;
     const taskDate = document.getElementById("form-taskdate").value;
     const taskTime = document.getElementById("form-tasktime").value;
-    const priority = document.getElementById("is-priority").value;
+    const priority = document.getElementById("is-priority").checked;
 
     // If added main task directly from project, use project value instead
     if (projectSelect.classList.contains("invisible")) {
