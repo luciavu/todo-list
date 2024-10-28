@@ -113,24 +113,32 @@ export function setupUserEventListeners(user) {
     });
 }
 
-export function addDeleteTodoEventListener(deleteBtn, project, todo, task) {
+export function addDeleteTodoEventListener(
+    deleteBtn,
+    project,
+    todo,
+    task,
+    user
+) {
     deleteBtn.addEventListener("click", () => {
         // Remove task
         removeTodo(project, todo, task);
+        saveDetails(user);
     });
 }
 
-export function addCompleteTodoEventListener(completeBtn, todo) {
+export function addCompleteTodoEventListener(completeBtn, todo, user) {
     // Remove task from all, move to complete on refresh
     completeBtn.addEventListener("click", () => {
         toggleCompleteTodo(todo, completeBtn);
+        saveDetails(user);
     });
 }
 
-export function setupProjectEventListeners(projectDiv, project) {
+export function setupProjectEventListeners(projectDiv, project, user) {
     projectDiv.addEventListener("click", () => {
         setActive(projectDiv);
-        loadProject(project, project.name);
+        loadProject(project, project.name, user);
     });
 }
 

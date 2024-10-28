@@ -25,8 +25,7 @@ export function loadDefaultTasks(user) {
 
 export function loadExistingData(user) {
     loadUsername(user.name);
-    console.log("the data says your name was", user.name);
     user.getProjects().forEach((project) => {
-        addDOMProject(project);
+        addDOMProject(project, user);
     });
 }

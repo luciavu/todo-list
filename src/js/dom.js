@@ -6,13 +6,14 @@ import {
 } from "./events";
 
 import {
+    saveDetails,
     getScheduledProjects,
     getCompletedProjects,
     getTodaysProjects,
     getSearchedProjects,
 } from "./app.js";
 
-export function addDOMProject(project) {
+export function addDOMProject(project, user) {
     // Add project folder
     const projectFolder = document.querySelector(".project-scrollable");
     const projectDiv = document.createElement("div");
@@ -29,7 +30,7 @@ export function addDOMProject(project) {
     projectDiv.append(projectName);
     projectFolder.append(projectDiv);
 
-    setupProjectEventListeners(projectDiv, project);
+    setupProjectEventListeners(projectDiv, project, user);
 
     // Add project to list
     const formOptions = document.getElementById("project-select");
@@ -140,24 +141,22 @@ export function reloadMain(user) {
 
 export function loadSection(user, section) {
     const projects = user.getProjects();
-    console.log(section.id);
 
     switch (section.id) {
         case "all":
-            loadProject(projects, "All");
-            console.log("all", projects);
+            loadProject(projects, "All", user);
             return;
         case "today":
             const todaysProjects = getTodaysProjects(projects);
-            loadProject(todaysProjects, "Today");
+            loadProject(todaysProjects, "Today", user);
             return;
         case "scheduled":
             const scheduledProjects = getScheduledProjects(projects);
-            loadProject(scheduledProjects, "Scheduled");
+            loadProject(scheduledProjects, "Scheduled", user);
             return;
         case "completed":
             const completedProjects = getCompletedProjects(projects);
-            loadProject(completedProjects, "Completed");
+            loadProject(completedProjects, "Completed", user);
             return;
         case "search-bar":
             const searchedProjects = getSearchedProjects(
@@ -166,14 +165,15 @@ export function loadSection(user, section) {
             );
             loadProject(
                 searchedProjects,
-                `Search result for "${section.value}"`
+                `Search result for "${section.value}"`,
+                user
             );
         default:
             return;
     }
 }
 
-export function loadProject(projects, mainHeading) {
+export function loadProject(projects, mainHeading, user) {
     // Clear task display
     clearTasks();
     let counter = 0;
@@ -225,8 +225,7 @@ export function loadProject(projects, mainHeading) {
                 taskCheck.classList.add("icon-circle-thin");
                 taskCheckFill.classList.add("invisible");
                 counter++;
-
-                addCompleteTodoEventListener(taskCheck, todo);
+                addCompleteTodoEventListener(taskCheck, todo, user);
             }
 
             taskCheck.classList.add("task-completed");
@@ -258,7 +257,7 @@ export function loadProject(projects, mainHeading) {
             task.append(deleteTask);
 
             taskGroup.append(task);
-            addDeleteTodoEventListener(deleteTask, project, todo, task);
+            addDeleteTodoEventListener(deleteTask, project, todo, task, user);
         }
 
         taskContainer.append(taskGroup);

@@ -1,7 +1,6 @@
 import { addDOMProject } from "./dom.js";
-import { Project, Todo } from "./models.js";
+import { Project, Todo, User } from "./models.js";
 import { isAfter, isSameDay } from "date-fns";
-import { User } from "./models.js";
 import { parse } from "date-fns";
 
 export function recreateUserObject(userData) {
@@ -16,21 +15,19 @@ export function recreateUserObject(userData) {
                 todo.description,
                 todo.dueDate,
                 todo.dueTime,
-                todo.priority
+                todo.priority,
+                todo.completed
             );
             projectObject.addTodo(todoObject);
         }
 
         user.addNewProject(projectObject);
     }
-    console.log(user);
     return user;
 }
 export function saveDetails(user) {
-    console.log(user);
     // Convert user object to JSON string
     const userDetails = JSON.stringify(user);
-    console.log(userDetails);
     // Store in localStorage
     localStorage.setItem("user", userDetails);
 }
@@ -48,7 +45,6 @@ export function addProject(name, user) {
     user.addNewProject(project);
     addDOMProject(project);
     saveDetails(user);
-    console.log("saved", project);
     return project;
 }
 
@@ -63,8 +59,6 @@ export function addTodo(
     const todo = new Todo(description, dueDate, dueTime, priority);
     project.addTodo(todo);
     saveDetails(user);
-    console.log("saved", todo, "in", project);
-    console.log(localStorage.getItem("user"));
 }
 
 export function formatDate(dueDate, dueTime) {
