@@ -218,8 +218,6 @@ export function loadProject(projects, mainHeading, user) {
                 taskCheck.classList.add("icon-circle-empty");
                 if (mainHeading !== "Completed") {
                     continue;
-                } else {
-                    deleteTask.style.display = "none";
                 }
             } else {
                 taskCheck.classList.add("icon-circle-thin");
@@ -319,13 +317,18 @@ function loadTodoIcons(div, priority, date, time, overdue) {
     }
 }
 
-export function removeTodo(project, todo, task) {
-    const todoRef = project.getTodoById(todo.id);
+export function removeTodo(project, todo, task, user) {
+    const projectObject = user.getProjectByName(project.name);
+
+    const todoRef = projectObject.getTodoById(todo.id);
     let tempTotalTasks = parseInt(
         document.querySelector(".task-summary").textContent[0]
     );
-    updateTaskCount(--tempTotalTasks);
-    project.removeTodo(todoRef);
+
+    if (!todoRef.completed) {
+        updateTaskCount(--tempTotalTasks);
+    }
+    projectObject.removeTodo(todoRef);
     task.remove();
 }
 

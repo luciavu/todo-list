@@ -122,7 +122,7 @@ export function addDeleteTodoEventListener(
 ) {
     deleteBtn.addEventListener("click", () => {
         // Remove task
-        removeTodo(project, todo, task);
+        removeTodo(project, todo, task, user);
         saveDetails(user);
     });
 }
