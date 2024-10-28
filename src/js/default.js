@@ -1,5 +1,11 @@
 import { addProject } from "./app.js";
-import { addDOMProject, loadSection, updateTaskCount, loadUsername } from "./dom.js";
+import {
+    addDOMProject,
+    loadSection,
+    updateTaskCount,
+    loadUsername,
+    addProjectOption,
+} from "./dom.js";
 
 export function loadDefaultView(user) {
     const allSection = document.getElementById("all");
@@ -18,8 +24,11 @@ export function loadDefaultTasks(user) {
 }
 
 export function loadUserData(user) {
+    const allSection = document.getElementById("all");
     loadUsername(user.name);
     user.getProjects().forEach((project) => {
+        addProjectOption(project);
         addDOMProject(project, user);
     });
+    loadSection(user, allSection);
 }

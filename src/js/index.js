@@ -10,13 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!localStorage.getItem("user")) {
         // New user
         user = new User("New User");
-        loadDefaultView(new User("New User"));
+        loadDefaultView(user);
+        loadDefaultTasks(user);
     } else {
         // Returning user
         const userData = JSON.parse(localStorage.getItem("user"));
         user = recreateUserObject(userData);
         loadUserData(user);
     }
-    loadDefaultTasks(user);
     setupMainEventListeners(user);
 });

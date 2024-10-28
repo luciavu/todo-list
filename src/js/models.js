@@ -1,5 +1,5 @@
 import { setupUserEventListeners } from "./events";
-import { formatDate } from "./app.js";
+import { formatDate, removeProjectOptionFromSelect } from "./app.js";
 import { isBefore } from "date-fns";
 
 const todosMap = new WeakMap(); // Private todos property for Project
@@ -79,6 +79,11 @@ export class User {
 
     addNewProject(project) {
         this.projects.push(project);
+    }
+
+    removeProject(project) {
+        this.projects = this.projects.filter((p) => p.name !== project.name);
+        removeProjectOptionFromSelect(project.name);
     }
 
     getProjectByName(name) {

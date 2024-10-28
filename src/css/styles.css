@@ -552,3 +552,13 @@ form button {
 .task .icon-circle-empty {
     color: var(--dark-blue);
 }
+
+.task-heading:hover .delete-project {
+    display: inline-block;
+}
+.delete-project {
+    color: var(--grey);
+    cursor: pointer;
+    margin-left: 0.7rem;
+    display: none;
+}

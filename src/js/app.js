@@ -1,4 +1,4 @@
-import { addDOMProject } from "./dom.js";
+import { addDOMProject, addProjectOption } from "./dom.js";
 import { Project, Todo, User } from "./models.js";
 import { isAfter, isSameDay } from "date-fns";
 import { parse } from "date-fns";
@@ -22,6 +22,7 @@ export function recreateUserObject(userData) {
         });
         user.addNewProject(projectObject);
     });
+    console.log("The json says", user);
     return user;
 }
 
@@ -41,7 +42,8 @@ export function addProject(name, user) {
         return;
     }
     user.addNewProject(project);
-    addDOMProject(project);
+    addProjectOption(project);
+    addDOMProject(project, user);
     saveDetails(user);
     return project;
 }
@@ -50,6 +52,16 @@ export function addTodo(description, date, time, priority, project, user) {
     const todo = new Todo(description, date, time, priority);
     project.addTodo(todo);
     saveDetails(user);
+}
+
+export function removeProjectOptionFromSelect(projectName) {
+    const formOptions = document.getElementById("project-select");
+    const optionToRemove = Array.from(formOptions.options).find(
+        (option) => option.value === projectName
+    );
+    if (optionToRemove) {
+        formOptions.removeChild(optionToRemove);
+    }
 }
 
 export function formatDate(dueDate, dueTime) {

@@ -2,6 +2,7 @@ import {
     addTaskEventListener,
     setupProjectEventListeners,
     addDeleteTodoEventListener,
+    addDeleteProjectEventListener,
     addCompleteTodoEventListener,
 } from "./events";
 
@@ -25,7 +26,24 @@ function createElement(type, classNames = [], textContent = "") {
     return element;
 }
 
+export function clearProjectFolder() {
+    const projects = document.getElementsByClassName("project");
+    Array.from(projects).forEach((project) => {
+        project.remove();
+    });
+}
+
+export function addProjectOption(project) {
+    // Add project to list
+    const formOptions = document.getElementById("project-select");
+    const option = document.createElement("option");
+    option.value = project.name;
+    option.textContent = project.name;
+    formOptions.append(option);
+}
+
 export function addDOMProject(project, user) {
+    console.log(user);
     // Add project folder
     const projectFolder = document.querySelector(".project-scrollable");
     const projectDiv = createElement("div", ["project"]);
@@ -38,13 +56,8 @@ export function addDOMProject(project, user) {
     projectFolder.append(projectDiv);
 
     setupProjectEventListeners(projectDiv, project, user);
-
-    // Add project to list
-    const formOptions = document.getElementById("project-select");
-    const option = document.createElement("option");
-    option.value = project.name;
-    option.textContent = project.name;
-    formOptions.append(option);
+    console.log(user);
+    reloadMain(user);
 }
 
 export function loadUsername(name) {
@@ -85,7 +98,10 @@ export function exitProjectPopup() {
 }
 
 export function setActive(element) {
-    document.querySelector(".active").classList.toggle("active");
+    const currActive = document.querySelector(".active");
+    if (currActive) {
+        currActive.classList.remove("active");
+    }
     element.classList.add("active");
 }
 
@@ -156,6 +172,7 @@ export function loadSection(user, section) {
 }
 
 export function loadProject(projects, mainHeading, user) {
+    console.log(user, localStorage);
     // Clear task display
     clearTasks();
     let counter = 0;
@@ -171,6 +188,9 @@ export function loadProject(projects, mainHeading, user) {
         const taskContainer = createElement("div", ["task-container"]);
         const taskGroup = createElement("div", ["task-project-group"]);
         const taskHeading = createElement("div", ["task-heading"], project.name);
+        const projectDelete = createElement("i", ["icon-trash-empty", "delete-project"]);
+        taskHeading.append(projectDelete);
+        addDeleteProjectEventListener(projectDelete, project, user);
         taskGroup.append(taskHeading);
 
         project.todos.forEach((todo) => {
