@@ -2,6 +2,8 @@ import { setupUserEventListeners } from "./events";
 import { formatDate } from "./app.js";
 import { isBefore } from "date-fns";
 
+const todosMap = new WeakMap(); // Private todos property for Project
+
 export class Todo {
     static idCounter = 0;
 
@@ -11,53 +13,47 @@ export class Todo {
         this.dueDate = dueDate;
         this.dueTime = dueTime;
         this.priority = priority;
-        this.overdue = false;
         this.completed = completed;
-        this.init();
-    }
-
-    init() {
-        this.isOverdue();
+        this.overdue = this.checkOverdue();
     }
 
     toggleComplete() {
         this.completed = !this.completed;
+        // No longer overdue once completed
+        this.overdue = this.completed ? false : this.checkOverdue();
     }
 
     getDate() {
         return formatDate(this.dueDate, this.dueTime);
     }
 
-    isOverdue() {
-        // Get the current date
-        const currentDate = new Date();
-
-        if (isBefore(this.getDate(), currentDate)) {
-            this.overdue = true;
-        }
+    checkOverdue() {
+        return isBefore(new Date(this.getDate()), new Date());
     }
 }
 
 export class Project {
     constructor(name) {
         this.name = name;
-        this.todos = [];
+        todosMap.set(this, []);
     }
 
     addTodo(todo) {
-        this.todos.push(todo);
+        todosMap.get(this).push(todo);
     }
 
-    getTodoList() {
-        return this.todos;
+    get todos() {
+        return todosMap.get(this);
     }
 
     removeTodo(todo) {
-        this.getTodoList().pop(todo);
+        const todos = todosMap.get(this);
+        const updatedTodos = todos.filter((t) => t.id !== todo.id);
+        todosMap.set(this, updatedTodos);
     }
 
     getTodoById(id) {
-        return this.getTodoList().find((todo) => todo.id === id);
+        return this.todos.find((todo) => todo.id === id);
     }
 }
 
@@ -87,5 +83,16 @@ export class User {
 
     getProjectByName(name) {
         return this.projects.find((project) => project.name === name);
+    }
+
+    // Define JSON format
+    toJSON() {
+        return {
+            name: this.name,
+            projects: this.projects.map((project) => ({
+                name: project.name,
+                todos: project.todos,
+            })),
+        };
     }
 }

@@ -5,6 +5,7 @@ import { parse } from "date-fns";
 
 export function recreateUserObject(userData) {
     const user = new User(userData.name);
+
     userData.projects.forEach((project) => {
         const projectObject = new Project(project.name);
         const projectTodos = project.todos;
@@ -31,7 +32,11 @@ export function saveDetails(user) {
 
 export function addProject(name, user) {
     const project = new Project(name);
-    if (user.getProjects().some((existingProject) => existingProject.name === project.name)) {
+    if (
+        user
+            .getProjects()
+            .some((existingProject) => existingProject.name === project.name)
+    ) {
         // If already exists don't create new project
         return;
     }
@@ -55,11 +60,14 @@ export function formatDate(dueDate, dueTime) {
 
 export function getCompletedProjects(projects) {
     return projects
-        .filter((project) => project.getTodoList().some((todo) => todo.completed))
-        .map((project) => ({
-            ...project,
-            todos: project.getTodoList().filter((todo) => todo.completed),
-        }));
+        .map((project) => {
+            const completedTodos = project.todos.filter((todo) => todo.completed);
+            if (completedTodos.length > 0) {
+                return { ...project, todos: completedTodos };
+            }
+            return null;
+        })
+        .filter((project) => project !== null); // Filter out empty projects
 }
 
 export function getTodaysProjects(projects) {
@@ -67,19 +75,16 @@ export function getTodaysProjects(projects) {
     today.setHours(0, 0, 0, 0);
 
     return projects
-        .filter((project) =>
-            project
-                .getTodoList()
-                .some((todo) => isSameDay(new Date(todo.getDate()), today) && !todo.completed)
-        )
-        .map((project) => ({
-            ...project,
-            todos: project
-                .getTodoList()
-                .filter(
-                    (todo) => isSameDay(new Date(todo.getDate()), today) && !todo.completed
-                ),
-        }));
+        .map((project) => {
+            const todaysTodos = project.todos.filter(
+                (todo) => isSameDay(new Date(todo.getDate()), today) && !todo.completed
+            );
+            if (todaysTodos.length > 0) {
+                return { ...project, todos: todaysTodos };
+            }
+            return null;
+        })
+        .filter((project) => project !== null);
 }
 
 export function getScheduledProjects(projects) {
@@ -88,13 +93,13 @@ export function getScheduledProjects(projects) {
 
     return projects
         .filter((project) =>
-            project
-                .getTodoList()
-                .some((todo) => isAfter(new Date(todo.getDate()), today) && !todo.completed)
+            project.todos.some(
+                (todo) => isAfter(new Date(todo.getDate()), today) && !todo.completed
+            )
         )
         .map((project) => ({
             ...project,
-            todos: project.getTodoList().filter((todo) => {
+            todos: project.todos.filter((todo) => {
                 const todoDate = new Date(todo.getDate());
                 return isAfter(todoDate, today) && !todo.completed;
             }),
@@ -106,22 +111,18 @@ export function getSearchedProjects(projects, searchValue) {
 
     return projects
         .filter((project) =>
-            project
-                .getTodoList()
-                .some(
-                    (todo) =>
-                        todo.description.toLowerCase().includes(lowerCaseSearchValue) &&
-                        !todo.completed
-                )
+            project.todos.some(
+                (todo) =>
+                    todo.description.toLowerCase().includes(lowerCaseSearchValue) &&
+                    !todo.completed
+            )
         )
         .map((project) => ({
             ...project,
-            todos: project
-                .getTodoList()
-                .filter(
-                    (todo) =>
-                        todo.description.toLowerCase().includes(lowerCaseSearchValue) &&
-                        !todo.completed
-                ),
+            todos: project.todos.filter(
+                (todo) =>
+                    todo.description.toLowerCase().includes(lowerCaseSearchValue) &&
+                    !todo.completed
+            ),
         }));
 }

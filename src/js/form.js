@@ -5,7 +5,6 @@ export function retrieveProjectDetails() {
 }
 
 export function retrieveTaskDetails(user) {
-    const projectSelect = document.querySelector(".form-project");
     const popup = document.querySelector(".add-task-popup");
     const taskName = document.getElementById("form-taskname").value;
     let projectName = document.getElementById("project-select").value;
@@ -13,20 +12,18 @@ export function retrieveTaskDetails(user) {
     const taskTime = document.getElementById("form-tasktime").value;
     const priority = document.getElementById("is-priority").checked;
 
+    // Only add task if name, date and time was filled out
+    if (!taskName || !taskDate || !taskTime) {
+        console.warn("Please fill out all fields.");
+        return;
+    }
+
     // If added main task directly from project, use project value instead
-    if (projectSelect.classList.contains("invisible")) {
+    if (document.querySelector(".form-project").classList.contains("invisible")) {
         projectName = popup.classList[1]; // Retrieve temporary project name tag
     }
 
-    // Only add task if they filled out all description, time and date
-    if (taskName && taskDate && taskTime) {
-        addTodo(
-            taskName,
-            taskDate,
-            taskTime,
-            priority,
-            user.getProjectByName(projectName),
-            user
-        );
-    }
+    const project = user.getProjectByName(projectName);
+
+    addTodo(taskName, taskDate, taskTime, priority, project, user);
 }
