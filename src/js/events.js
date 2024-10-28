@@ -90,7 +90,9 @@ export function setupMainEventListeners(user) {
 
     const projectBtn = document.getElementById("addProjectBtn");
     projectBtn.addEventListener("click", () => {
-        const project = addProject(retrieveProjectDetails(), user);
+        if (retrieveProjectDetails() !== "") {
+            addProject(retrieveProjectDetails(), user);
+        }
         exitProjectPopup();
     });
 }

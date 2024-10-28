@@ -1,7 +1,7 @@
 import { addTodo } from "./app.js";
 export function retrieveProjectDetails() {
     const projectName = document.getElementById("form-projectname");
-    return projectName.value;
+    return projectName.value.replace(/ /g, ""); // Remove whitespace
 }
 
 export function retrieveTaskDetails(user) {
@@ -18,12 +18,15 @@ export function retrieveTaskDetails(user) {
         projectName = popup.classList[1]; // Retrieve temporary project name tag
     }
 
-    addTodo(
-        taskName,
-        taskDate,
-        taskTime,
-        priority,
-        user.getProjectByName(projectName),
-        user
-    );
+    // Only add task if they filled out all description, time and date
+    if (taskName && taskDate && taskTime) {
+        addTodo(
+            taskName,
+            taskDate,
+            taskTime,
+            priority,
+            user.getProjectByName(projectName),
+            user
+        );
+    }
 }
