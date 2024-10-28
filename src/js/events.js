@@ -12,41 +12,43 @@ import {
     reloadMain,
     removeTodo,
     toggleCompleteTodo,
-    loadUsername,
 } from "./dom";
 
 import { addProject, saveDetails } from "./app.js";
 import { retrieveProjectDetails, retrieveTaskDetails } from "./form.js";
 
+// Helper function for blur when entering text input
+function blurOnEnter(element) {
+    element.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+            element.blur();
+        }
+    });
+}
+
 export function setupMainEventListeners(user) {
     // Add task from sidebar/notes
-    const sideAddTaskBtn = document.getElementById("add-task");
-    sideAddTaskBtn.addEventListener("click", (user) => {
+    document.getElementById("add-task").addEventListener("click", () => {
         addTaskPopup();
     });
 
     // Add project
-    const addProjectButton = document.querySelector(".add-project");
-    addProjectButton.addEventListener("click", () => {
+    document.querySelector(".add-project").addEventListener("click", () => {
         addProjectPopup();
     });
 
     // Click on section
-    const sections = document.querySelectorAll(".section");
-    for (let section of sections) {
+    document.querySelectorAll(".section").forEach((section) => {
         section.addEventListener("click", () => {
             setActive(section);
             loadSection(user, section);
         });
-    }
+    });
 
     // Search text input
     const searchbar = document.getElementById("search-bar");
-    searchbar.addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-            this.blur();
-        }
-    });
+    blurOnEnter(searchbar);
+
     searchbar.addEventListener("blur", () => {
         if (searchbar.value.length > 0) {
             loadSection(user, searchbar);
@@ -69,27 +71,23 @@ export function setupMainEventListeners(user) {
     });
 
     // Popup exit
-    const closeTask = document.querySelector(".exit-task-popup");
-    closeTask.addEventListener("click", () => {
+    document.querySelector(".exit-task-popup").addEventListener("click", () => {
         resetProjectSelector();
         exitTaskPopup();
     });
-    const closeProject = document.querySelector(".exit-project-popup");
-    closeProject.addEventListener("click", () => {
+    document.querySelector(".exit-project-popup").addEventListener("click", () => {
         exitProjectPopup();
     });
 
     // Popup submit buttons
-    const taskBtn = document.getElementById("addTaskBtn");
-    taskBtn.addEventListener("click", () => {
+    document.getElementById("addTaskBtn").addEventListener("click", () => {
         retrieveTaskDetails(user);
         reloadMain(user);
         resetProjectSelector();
         exitTaskPopup();
     });
 
-    const projectBtn = document.getElementById("addProjectBtn");
-    projectBtn.addEventListener("click", () => {
+    document.getElementById("addProjectBtn").addEventListener("click", () => {
         if (retrieveProjectDetails() !== "") {
             addProject(retrieveProjectDetails(), user);
         }
@@ -99,12 +97,7 @@ export function setupMainEventListeners(user) {
 
 export function setupUserEventListeners(user) {
     const username = document.getElementById("name");
-
-    username.addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-            this.blur();
-        }
-    });
+    blurOnEnter(username);
 
     username.addEventListener("blur", () => {
         user.setName(username.value);
@@ -112,13 +105,7 @@ export function setupUserEventListeners(user) {
     });
 }
 
-export function addDeleteTodoEventListener(
-    deleteBtn,
-    project,
-    todo,
-    task,
-    user
-) {
+export function addDeleteTodoEventListener(deleteBtn, project, todo, task, user) {
     deleteBtn.addEventListener("click", () => {
         // Remove task
         removeTodo(project, todo, task, user);
