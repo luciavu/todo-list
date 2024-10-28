@@ -1,23 +1,32 @@
-import { addProject, addTodo } from "./app.js";
-import { loadSection } from "./dom.js";
+import { addProject } from "./app.js";
+import { Project } from "./models.js";
+import {
+    addDOMProject,
+    loadSection,
+    updateTaskCount,
+    loadUsername,
+} from "./dom.js";
 
-function loadDefaultView(user) {
+export function loadDefaultView(user) {
     const all = document.getElementById("all");
+    updateTaskCount(0);
     loadSection(user, all);
 }
 
-function loadDefaultTasks(user) {
+export function loadDefaultTasks(user) {
+    const all = document.getElementById("all");
     const defaultProjects = ["School", "Work", "Errands"];
 
     defaultProjects.forEach((projectName) => {
-        const project = addProject(projectName, user);
-        addTodo("Add a task", `29/10/24`, "12:00am", true, project, user);
-
-        addTodo("Task 2", `28/10/24`, `12:00am`, true, project, user);
+        addProject(projectName, user);
     });
+    loadSection(user, all);
 }
 
-export function loadDefault(user) {
-    loadDefaultTasks(user);
-    loadDefaultView(user);
+export function loadExistingData(user) {
+    loadUsername(user.name);
+    console.log("the data says your name was", user.name);
+    user.getProjects().forEach((project) => {
+        addDOMProject(project);
+    });
 }

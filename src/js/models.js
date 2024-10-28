@@ -1,19 +1,18 @@
 import { setupUserEventListeners } from "./events";
-import { formatDate } from "./app.js";
+import { formatDate, saveDetails } from "./app.js";
 import { isBefore } from "date-fns";
 
 export class Todo {
     static idCounter = 0;
 
-    constructor(description, dueDate, dueTime, priority, project) {
+    constructor(description, dueDate, dueTime, priority, completed = false) {
         this.id = ++Todo.idCounter;
         this.description = description;
         this.dueDate = dueDate;
         this.dueTime = dueTime;
-        this.overdue = false;
         this.priority = priority;
-        this.completed = false;
-        this.project = project;
+        this.overdue = false;
+        this.completed = completed;
         this.init();
     }
 
@@ -63,10 +62,9 @@ export class Project {
 }
 
 export class User {
-    constructor(name, totalTasks = 0, projects) {
+    constructor(name, projects = []) {
         this.name = name;
-        this.totalTasks = totalTasks;
-        this.projects = [];
+        this.projects = projects;
         this.init();
     }
 

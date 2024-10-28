@@ -39,6 +39,11 @@ export function addDOMProject(project) {
     formOptions.append(option);
 }
 
+export function loadUsername(name) {
+    const nameDiv = document.getElementById("name");
+    nameDiv.placeholder = name;
+}
+
 export function addTaskPopup(name) {
     const popup = document.querySelector(".add-task-popup");
     // Keep track of what project the task is under
@@ -135,10 +140,12 @@ export function reloadMain(user) {
 
 export function loadSection(user, section) {
     const projects = user.getProjects();
+    console.log(section.id);
 
     switch (section.id) {
         case "all":
             loadProject(projects, "All");
+            console.log("all", projects);
             return;
         case "today":
             const todaysProjects = getTodaysProjects(projects);
@@ -324,8 +331,7 @@ export function removeTodo(project, todo, task) {
 }
 
 export function toggleCompleteTodo(todo, icon) {
-    const iconBackground = icon.nextSibling; // Assuming this is always present
-
+    const iconBackground = icon.nextSibling;
     todo.toggleComplete();
 
     // Update icon

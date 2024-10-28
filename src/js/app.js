@@ -1,13 +1,54 @@
 import { addDOMProject } from "./dom.js";
 import { Project, Todo } from "./models.js";
 import { isAfter, isSameDay } from "date-fns";
-
+import { User } from "./models.js";
 import { parse } from "date-fns";
+
+export function recreateUserObject(userData) {
+    const user = new User(userData.name);
+    for (let project of userData.projects) {
+        let projectObject = new Project(project.name);
+
+        const projectTodos = project.todos;
+
+        for (let todo of projectTodos) {
+            const todoObject = new Todo(
+                todo.description,
+                todo.dueDate,
+                todo.dueTime,
+                todo.priority
+            );
+            projectObject.addTodo(todoObject);
+        }
+
+        user.addNewProject(projectObject);
+    }
+    console.log(user);
+    return user;
+}
+export function saveDetails(user) {
+    console.log(user);
+    // Convert user object to JSON string
+    const userDetails = JSON.stringify(user);
+    console.log(userDetails);
+    // Store in localStorage
+    localStorage.setItem("user", userDetails);
+}
 
 export function addProject(name, user) {
     const project = new Project(name);
+    if (
+        user
+            .getProjects()
+            .some((existingProject) => existingProject.name === project.name)
+    ) {
+        // If already exists don't create new project
+        return;
+    }
     user.addNewProject(project);
     addDOMProject(project);
+    saveDetails(user);
+    console.log("saved", project);
     return project;
 }
 
@@ -19,8 +60,11 @@ export function addTodo(
     project,
     user
 ) {
-    const todo = new Todo(description, dueDate, dueTime, priority, project);
+    const todo = new Todo(description, dueDate, dueTime, priority);
     project.addTodo(todo);
+    saveDetails(user);
+    console.log("saved", todo, "in", project);
+    console.log(localStorage.getItem("user"));
 }
 
 export function formatDate(dueDate, dueTime) {

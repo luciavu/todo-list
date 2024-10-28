@@ -13,9 +13,10 @@ import {
     reloadMain,
     removeTodo,
     toggleCompleteTodo,
+    loadUsername,
 } from "./dom";
 
-import { addProject } from "./app.js";
+import { addProject, saveDetails } from "./app.js";
 import { retrieveProjectDetails, retrieveTaskDetails } from "./form.js";
 
 export function setupMainEventListeners(user) {
@@ -108,6 +109,7 @@ export function setupUserEventListeners(user) {
 
     username.addEventListener("blur", () => {
         user.setName(username.value);
+        saveDetails(user);
     });
 }
 
