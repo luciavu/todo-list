@@ -1,5 +1,5 @@
 import { setupUserEventListeners } from "./events";
-import { formatDate, saveDetails } from "./app.js";
+import { formatDate } from "./app.js";
 import { isBefore } from "date-fns";
 
 export class Todo {

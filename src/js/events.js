@@ -4,8 +4,7 @@ import {
     setActive,
     exitTaskPopup,
     exitProjectPopup,
-    expandSidebar,
-    collapseSidebar,
+    toggleSidebar,
     loadProject,
     loadSection,
     hideProjectSelector,
@@ -61,12 +60,12 @@ export function setupMainEventListeners(user) {
     // Sidebar collapse button
     const collapse = document.querySelector(".left");
     collapse.addEventListener("click", () => {
-        expandSidebar();
+        toggleSidebar(false); // expand
     });
 
     const focus = document.querySelector(".right");
     focus.addEventListener("click", () => {
-        collapseSidebar();
+        toggleSidebar(true); //collapse
     });
 
     // Popup exit
