@@ -13,7 +13,7 @@ export function retrieveTaskDetails(user) {
     const priority = document.getElementById("is-priority").checked;
 
     // Only add task if name, date and time was filled out
-    if (!taskName || !taskDate || !taskTime) {
+    if (!taskName || !taskDate || !taskTime || !projectName) {
         console.warn("Please fill out all fields.");
         return;
     }

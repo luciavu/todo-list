@@ -117,24 +117,19 @@ export function addDeleteTodoEventListener(deleteBtn, project, todo, task, user)
 
 export function addDeleteProjectEventListener(div, project, user) {
     div.addEventListener("click", () => {
-        console.warn("ITS DELETING PROJECT??");
-        console.log("the user is", user);
         // Delete project in User class
-        console.log(project);
         user.removeProject(project);
         // Save changes
         saveDetails(user);
-        console.log("saved:", user);
-        console.log(localStorage);
+        // Move back to main section
+        const allDiv = document.getElementById("all");
+        loadSection(user, allDiv);
+        setActive(allDiv);
         // Refresh folder UI
         clearProjectFolder();
         user.projects.forEach((project) => {
             addDOMProject(project, user);
         });
-
-        // Move back to main section
-        const allDiv = document.getElementById("all");
-        loadSection(user, allDiv);
     });
 }
 
@@ -147,8 +142,6 @@ export function addCompleteTodoEventListener(completeBtn, todo, user) {
 }
 
 export function setupProjectEventListeners(projectDiv, project, user) {
-    console.log(user);
-    console.log(localStorage);
     projectDiv.addEventListener("click", () => {
         setActive(projectDiv);
         loadProject(project, project.name, user);

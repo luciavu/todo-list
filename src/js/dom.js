@@ -43,7 +43,6 @@ export function addProjectOption(project) {
 }
 
 export function addDOMProject(project, user) {
-    console.log(user);
     // Add project folder
     const projectFolder = document.querySelector(".project-scrollable");
     const projectDiv = createElement("div", ["project"]);
@@ -56,7 +55,6 @@ export function addDOMProject(project, user) {
     projectFolder.append(projectDiv);
 
     setupProjectEventListeners(projectDiv, project, user);
-    console.log(user);
     reloadMain(user);
 }
 
@@ -172,7 +170,6 @@ export function loadSection(user, section) {
 }
 
 export function loadProject(projects, mainHeading, user) {
-    console.log(user, localStorage);
     // Clear task display
     clearTasks();
     let counter = 0;

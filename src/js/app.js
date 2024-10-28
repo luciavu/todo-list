@@ -22,7 +22,6 @@ export function recreateUserObject(userData) {
         });
         user.addNewProject(projectObject);
     });
-    console.log("The json says", user);
     return user;
 }
 
