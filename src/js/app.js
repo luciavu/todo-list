@@ -63,7 +63,7 @@ export function addTodo(
 
 export function formatDate(dueDate, dueTime) {
     const dateString = `${dueDate} ${dueTime}`;
-    const dateFormat = "dd/MM/yy hh:mma";
+    const dateFormat = "yyyy-MM-dd HH:mm";
 
     // Todo date as date object
     const parsedDate = parse(dateString, dateFormat, new Date());
